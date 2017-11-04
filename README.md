@@ -3,7 +3,7 @@ Table of Contents (TOC)/Legend Widget for Arcgis JavaScript API version 4.xx
 
 Custom Widget for Arcgis JavaScript developers using JSAPI 4.xx and above based on Table of Content (TOC) for ArcGIS JavaScript API originally created by Nianwei Liu (nliu) at https://www.arcgis.com/home/item.html?id=9b6280a6bfb0430f8d1ebc969276b109
 
-Original widget only supported Arcgis Javascript version 3.xx and did not work with version 4.xx due to many property changes of different Classes in and AMD calling disabled in version 4 ( dojo.require )
+Original widget only supported Arcgis Javascript version 3.xx and did not work with version 4.xx due to many property changes of different Classes in and legacy calling disabled in version 4 ( dojo.require )
 
 Credits to Nianwei Liu (nliu) for original widget
 
