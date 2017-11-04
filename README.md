@@ -5,6 +5,8 @@ Custom Widget for Arcgis JavaScript developers using JSAPI 4.xx and above, origi
 
 Original widget only supported Arcgis Javascript version 3.xx and did not work with version 4.xx due to many property changes of different Classes in and AMD calling disabled in version 4 ( dojo.require )
 
+Live Demo: https://toc4xxtest.appspot.com/
+
 Current supported layer types: MapImageLayer, FeatureLayer, TileLayer(Not fully working)
 
 Known Issues: All legends for TileLayer will not display, working on a work around currently
@@ -63,4 +65,4 @@ lyr.watch('loaded', function (newVal, oldval) { // lyr is my layer object
 });
 
 ```
-
+Feel free to email any issues, bugs and suggestions to anghiaplee95@gmail.com
