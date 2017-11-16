@@ -11,6 +11,7 @@
  * <p>A TOC (Table of Contents) widget for ESRI ArcGIS Server JavaScript API 4.xx. The namespace is <code>agsjs</code></p>
  */
 // change log: 
+// v0.2 -- 2017-11-04: Fixed typo errors causing widget to not work with some map services
 // v0.1 -- 2017-11-03: Modified library to be compatible with Arcgis JSAPI 4.xx 
 
 
@@ -223,7 +224,7 @@ define("agsjs/dijit/TOC", [
                             this._createChildrenNodes(serviceLayer._legends, 'legend');
                         }
                     }
-                    else if (serviceLayer instanceof FeatureLayer || layer instanceof TileLayer) {
+                    else if (serviceLayer instanceof FeatureLayer || serviceLayer instanceof TileLayer) {
                         this.iconNode.src = "data:image/png;base64," + serviceLayer._legends["0"].legend["0"].imageData;
                         domContruct.destroy(this.containerNode);
                         this.containerNode = null;
@@ -631,7 +632,7 @@ define("agsjs/dijit/TOC", [
                         layerLookup['' + layerInfo.id] = layerInfo;
                         // used for later reference.
 
-                        if (layerInfo instanceof FeatureLayer || layer instanceof TileLayer) {
+                        if (layerInfo instanceof FeatureLayer || layerInfo instanceof TileLayer) {
                             layerInfo.visible = true;
                         }
                         else {
@@ -678,7 +679,7 @@ define("agsjs/dijit/TOC", [
                     array.forEach(layer.allSublayers.items, function (layerInfo) {
 
 
-                        if (layerInfo instanceof FeatureLayer || layer instanceof TileLayer) {
+                        if (layerInfo instanceof FeatureLayer || layerInfo instanceof TileLayer) {
                             tocInfos.push(layerInfo);
                         }
 
