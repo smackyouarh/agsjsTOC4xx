@@ -22,6 +22,9 @@ Usage:
 <link rel="stylesheet" href="https://js.arcgis.com/4.5/dijit/themes/claro/claro.css">
 <script src="https://js.arcgis.com/4.5/"></script>
 <script src="js/TOC_4xx.js"></script>
+
+<!-- Add claro class to body or relevant tags -- >
+<body class="claro"></body>
 ```
 
 2. Creating toc Object
