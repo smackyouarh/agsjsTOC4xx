@@ -50,10 +50,30 @@ require(["agsjs/dijit/TOC"], function () {
 ```
 Even though you can straight away add layers into layerInfos, its recommended you wait for the layer to finish loading before adding to layerInfos.
 
+Note: It's recommended that you listen to the 'layerview-create' event from the layer object instead of using the old "watch" method as it caused the widget to malfunction when web applications have too many layers ( Credits to Matt Price for pointing this out )
+
 Suggested practice:
 
 ```javascript
+//New Method ( Recommended for larger apps )
+lyr.on('layerview-create', function () {// lyr is my layer object
+    if (newVal) { 
+        tocLegend.layerInfos = []; // in this case, tocLegend is my agsjs.dijit.TOC object
+        for (let i = 0; i < map.layers.length; i++) {
+            tocLegend.layerInfos.push({
+                layer: map.layers.items[i],
+                title: map.layers.items[i].title,
+                slider: true,
+                autoToggle: false
+            });
+        }
+        tocLegend.refresh(); //Refresh the widget
+    }
+});
 
+
+
+//Old Method
 lyr.watch('loaded', function (newVal, oldval) { // lyr is my layer object
     if (newVal) { 
         tocLegend.layerInfos = []; // in this case, tocLegend is my agsjs.dijit.TOC object
