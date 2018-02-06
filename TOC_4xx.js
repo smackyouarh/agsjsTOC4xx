@@ -566,8 +566,8 @@ define("agsjs/dijit/TOC", [
             _getLegendInfo: function () {
 
                 var url = '';
-                var arr = this.rootLayer.parsedUrl.path.split("?");
-                url = arr[0];
+                var arr = this.rootLayer.url.split("?");
+                url = arr[0].replace('FeatureServer','MapServer');
                 var resBool = false;
                 var resJSON;
 
