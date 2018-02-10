@@ -15,6 +15,8 @@ Known Issues: All legends for TileLayer will not display, working on a work arou
 
 Changelog: 
 
+v0.5 -- 2018-02-11: Fixed bug where widget does correctly reflect features that are out of scale
+
 v0.4 -- 2018-05-02: Fixed bug where legend fails to load in some featureLayers
 
 v0.3 -- 2017-11-28: Fixed layers being displayed in reversed order - Credits to Matt Price for finding solution
