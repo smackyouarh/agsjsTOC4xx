@@ -10,7 +10,8 @@
  * @fileoverview
  * <p>A TOC (Table of Contents) widget for ESRI ArcGIS Server JavaScript API 4.xx. The namespace is <code>agsjs</code></p>
  */
-// change log: 
+// change log:
+// v0.6 -- 2018-04-15: Updated widget to work with ArcGis server 10.6
 // v0.5 -- 2018-02-11: Fixed bug where widget does correctly reflect features that are out of scale
 // v0.4 -- 2018-05-02: Fixed bug where legend fails to load in some featureLayers
 // v0.3 -- 2017-11-28: Fixed layers being displayed in reversed order - Credits to Matt Price for finding solution
@@ -584,7 +585,7 @@ define("agsjs/dijit/TOC", [
                 xhttp.onreadystatechange = function () {
                     if (xhttp.readyState === 4) {
                         var response = JSON.parse(xhttp.responseText);
-                        if (xhttp.status === 200 && xhttp.statusText === 'OK') {
+                        if (xhttp.status === 200 /*&& xhttp.statusText === 'OK'*/) {
                             resBool = true;
                             resJSON = response
                         } else {
