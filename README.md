@@ -15,6 +15,8 @@ Known Issues: All legends for TileLayer will not display, working on a work arou
 
 Changelog: 
 
+v0.7 -- 2018-04-27: Improved support for secured services
+
 v0.6 -- 2018-04-15: Updated widget to work with ArcGis server 10.6
 
 v0.5 -- 2018-02-11: Fixed bug where widget does correctly reflect features that are out of scale

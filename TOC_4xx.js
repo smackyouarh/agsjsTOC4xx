@@ -11,6 +11,7 @@
  * <p>A TOC (Table of Contents) widget for ESRI ArcGIS Server JavaScript API 4.xx. The namespace is <code>agsjs</code></p>
  */
 // change log:
+// v0.7 -- 2018-04-27: Improved support for secured services
 // v0.6 -- 2018-04-15: Updated widget to work with ArcGis server 10.6
 // v0.5 -- 2018-02-11: Fixed bug where widget does correctly reflect features that are out of scale
 // v0.4 -- 2018-05-02: Fixed bug where legend fails to load in some featureLayers
@@ -20,13 +21,13 @@
 
 
 define("agsjs/dijit/TOC", [
-    "esri/layers/MapImageLayer", "esri/layers/TileLayer", "esri/layers/FeatureLayer",
+    "esri/identity/IdentityManager", "esri/layers/MapImageLayer", "esri/layers/TileLayer", "esri/layers/FeatureLayer",
     'dijit/form/Form', 'dijit/form/CheckBox', 'dijit/form/HorizontalSlider', 'dojo/dom-attr', 'dojo/dom-style',
     'dojo/dom-class', 'dojo/dom-construct', 'dojo/_base/array', 'dojo/fx',
     'dojo/_base/declare', 'dijit/_Widget', 'dijit/_Templated',
     'dojox/gfx', 'dojo/fx/Toggler', 'dijit/form/Slider'],
     function (
-        MapImageLayer, TileLayer, FeatureLayer,
+        IdentityManager, MapImageLayer, TileLayer, FeatureLayer,
         dijitForm, CheckBox, horizontalSlider, domAttr, domStyle,
         domClass, domContruct, array, coreFx,
         declare, _Widget, _Templated, gfx, Toggler) {
@@ -339,7 +340,7 @@ define("agsjs/dijit/TOC", [
                 this.rootLayerTOC._currentIndent++;
                 var c = [];
 
-                for (var i = chdn.length -1, n = -1; i > n; i--) { // Credits to Matt Price for fixing reversed layer order
+                for (var i = chdn.length - 1, n = -1; i > n; i--) { // Credits to Matt Price for fixing reversed layer order
                     var chd = chdn[i];
                     var params = {
                         rootLayerTOC: this.rootLayerTOC,
@@ -565,21 +566,19 @@ define("agsjs/dijit/TOC", [
                 }
             },
 
-            _getLegendInfo: function () {
-
+            _processInfo: function () {
                 var url = '';
                 var arr = this.rootLayer.url.split("?");
-                url = arr[0].replace('FeatureServer','MapServer');
+                url = arr[0].replace('FeatureServer', 'MapServer');
                 var resBool = false;
                 var resJSON;
 
                 var data = new FormData();
                 data.append('f', 'pjson');
                 var tokenkey = this.strTokenKey;
-                if (typeof tokenkey !== 'undefined'){
+                if (typeof tokenkey !== 'undefined') {
                     data.append('token', tokenkey);
                 }
-                    
 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
@@ -602,6 +601,22 @@ define("agsjs/dijit/TOC", [
                 }
                 else
                     this._createRootLayerTOC();
+
+            },
+            _getLegendInfo: function () {
+                var objectPoint = this;
+                IdentityManager.checkSignInStatus(this.rootLayer.url.split('services')[0] + 'services').then(function (credential) {
+                    if (credential) {
+                        objectPoint.strTokenKey = credential.token;
+                        objectPoint._processInfo();
+                    }
+                    else {
+                        objectPoint.strTokenKey = undefined;
+                        objectPoint._processInfo();
+                    }
+                }).otherwise(function () {
+                    objectPoint._processInfo();
+                })
 
             },
             _processLegendError: function (err) {
@@ -832,7 +847,7 @@ define("agsjs/dijit/TOC", [
                         config: info,
                         tocWidget: this,
                         mapView: this.mapView,
-                        strTokenKey:this.tokenKey
+                        strTokenKey: this.tokenKey
                     });
                     this._rootLayerTOCs.push(rootLayerTOC);
                     this._checkLoadHandler = dojo.connect(rootLayerTOC, 'onLoad', this, '_checkLoad');
