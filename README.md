@@ -73,7 +73,7 @@ Suggested practice:
 ```javascript
 //New Method ( Recommended for larger apps )
 lyr.on('layerview-create', function () {// lyr is my layer object
-    if (newVal) { 
+   
         tocLegend.layerInfos = []; // in this case, tocLegend is my agsjs.dijit.TOC object
         for (let i = 0; i < map.layers.length; i++) {
             tocLegend.layerInfos.push({
@@ -84,7 +84,7 @@ lyr.on('layerview-create', function () {// lyr is my layer object
             });
         }
         tocLegend.refresh(); //Refresh the widget
-    }
+
 });
 
 
